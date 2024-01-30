@@ -9,7 +9,8 @@ var KilometresEnRadians = function(kilometres){ var rayonTerrestreEnKm = 6371;
 return kilometres / rayonTerrestreEnKm;
 };
 var salle = db.salles.findOne({"adresse.ville": "Nîmes"}); var requete = { ... };
-db.salles.find(requete ... };
+
+db.salles.find({{$nearSphere:{$geometry:{type:"Point",coordinate:salle.coordinates}}},{$and:[{styles:"Blues"},styles: "Soul"]},$maxDistance:"60000"},{_id:false,nom:true});
 ```
 
 ## Exercice 2
@@ -18,5 +19,7 @@ db.salles.find(requete ... };
 
 ```js
 var marseille = {"type": "Point", "coordinates": [43.300000, 5.400000]}
- db.salles.find(...)
+ db.salles.find({$nearSphere:{$geometry:{type: "Point",coordinate : marseille.coordinates},$minDistance:0,$maxDistance:100000}},{"adresse.ville":true})
 ```
+
+Site pour visualiser les point : <https://geojson.tools>
