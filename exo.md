@@ -75,7 +75,7 @@ Affichez le nom des salles qui possèdent une capacité d’accueil strictement 
 OK Exercice 3
 Affichez l’identifiant des salles pour lesquelles le champ adresse ne comporte pas de numéro.
 
-NOOOOOOOOOON Exercice 4
+OK Exercice 4
 Affichez l’identifiant puis le nom des salles qui ont exactement un avis.
 
 OK Exercice 5
@@ -117,7 +117,7 @@ Retirez le style «funk» à toutes les salles dont l’identifiant n’est éga
 OK Exercice 17
 Ajoutez un tableau composé des styles «techno» et « reggae » à la salle dont l’identifiant est 3.
 
-Exercice 18
+OK Exercice 18
 Pour les salles dont le nom commence par la lettre P (majuscule ou minuscule), augmentez la capacité de 150 places et rajoutez un champ de type tableau nommé contact dans lequel se trouvera un document comportant un champ nommé telephone dont la valeur sera « 04 11 94 00 10 ».
 
 Exercice 19

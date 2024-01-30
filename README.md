@@ -54,8 +54,7 @@ $nin : Matches none of the values specified in an array.
 - ```db.salles.find({smac:true},{_id:true, nom:true});``` : Affiche l'identifiant et le nom qui sont des SMAC
 - ```db.salles.find({capacite:{$gt:1000}});``` : Affiche les salles qui ont une capacite supérieur à 1000
 - ```db.salles.find({'adresse.numero': null},{_id:true});``` : Affiche les salles avec pas de numéro
-A FAIRE - ```db.salles.aggregate({},{_id:true, nom: true});``` : Affiche les l'id et le nom des salles avec exactement 1 commentaire
-A FAIRE BIS - ```db.collection.find({field:{$avis:1}});``` : Affiche les l'id et le nom des salles avec exactement 1 commentaire
+- ```db.salles.find({$where:"this.avis&&this.avis.length === 1"},{_id:1,nom:1})``` : Affiche les l'id et le nom des salles avec exactement 1 commentaire
 - ```db.salles.find({styles: "blues"},{_id:false,styles:true})``` : Affiches les styles si il y a le style "blues"
 - ```db.salles.find({'styles.0': "blues"},{_id:false,styles:true})``` : Même chose que au dessus mais on met le "blues" en haut
 - ```db.salles.aggregate([{$match:{'adresse.codePostal':{$regex:"84"}}},{$match:{capacite:{$lt:500}}}, {$project:{'adresse.ville':true}} ])``` : Afficher la ville des salles avec une capacité en dessous de 500 et avec le code postal commencant pas 84
@@ -63,9 +62,11 @@ A FAIRE BIS - ```db.collection.find({field:{$avis:1}});``` : Affiche les l'id et
 - ```db.salles.aggregate([{$match:{"avis.note":{$gte:8,$lte: 10}}},{$project:{_id:false,nom:true}}])``` : Affichage des nom des salles dont au moins un des avis comporte une note comprise entre 8 et 10
 - ```db.salles.aggregate([{$match:{"avis.date":{$gt:new Date('2019-11-15')}}},{$project:{_id:false,nom:true}}])``` : Affichage des nom des salles dont au moins un des avis comporte une date postérieure au 15/11/2019
 - ```db.salles.aggregate([{$match:{$expr:{$gt:[{$multiply:["$_id",100]},"$capacite"]}}},{$project:{_id: false,nom:true,capacite:true}}])``` : Affichage des noms ainsi que la capacité des salles dont le produit de la valeur de l’identifiant par 100 est strictement supérieur à la capacité
-- ```db.salles.aggregate([{$match:{type:"SMAC"}},{$project:{nom:1,stylesCount:{$size:"$styles"}}},{$match:{stylesCount:{$gt:2}}}])``` : Affichage des noms des salles de type SMAC programmant plus de deux styles de musiques différents en utilisant l’opérateur $where qui permet de faire usage de JavaScript
+- ```db.salles.aggregate([{$match:{smac:true}},{$project:{nom:true,stylesCount:{$size:"$styles"}}},{$match:{stylesCount:{$gte:2}}}])``` : Affichage des noms des salles de type SMAC programmant plus de deux styles de musiques différents en utilisant l’opérateur $where qui permet de faire usage de JavaScript
 - ```db.salles.distinct("adresse.codePostal")``` : Affichage des différents codes postaux présents dans les documents de la collection salles
 - ```db.salles.updateMany({},{$inc:{capacite:100}})``` : Augmente de 100 la capacite des salles
 - ```db.salles.updateMany({styles:{$nin:["jazz"]}},{$addToSet:{styles:"jazz"}})``` : Ajoute du Jazz au salles qui n'ont pas de jazz
 - ```db.salles.updateMany({_id:{$nin:[2, 3]}},{$pull:{styles:"funk"}})``` : Retire le Funk a tout le monde sauf au 2 et au 3
 - ```db.salles.updateOne({_id:3},{$push:{styles:{$each:["techno","reggae"]}}})``` : Rajout d'un tableau avec techno et reggae
+- ```db.salles.updateMany({nom:{$regex:/^p/i}},{$inc:{capacite:150},$set:{contact:{telephone:"04 11 94 00 10"}}})``` : Pour les salles dont le nom commence par la lettre P (majuscule ou minuscule), augmentez la capacité de 150 places et rajoutez un champ de type tableau nommé contact dans lequel se trouvera un document comportant un champ nommé telephone dont la valeur sera « 04 11 94 00 10 »
+- ```db.salles.update({nom:{$regex:'\b[aeiouyAEIOUY]\w*',$options:'i'}},{$push:{avis:{date: new Date(),note:10}}},{multi:true})``` : Pour les salles dont le nom commence par une voyelle (peu importe la casse, là aussi), rajoutez dans le tableau avis un document composé du champ date valant la date courante et du champ note valant 10 (double ou entier). L’expression régulière pour chercher une chaîne de caractères débutant par une voyelle suivie de n’importe quoi d’autre est \b[aeiouyAEIOUY]\w*
