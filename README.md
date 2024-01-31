@@ -17,13 +17,13 @@ kaggle.com => Plateform pour trouver beaucoup de données.
 ## Commandes
 
 Créer un index :
-db.macollection.createIndex({"champvoulus":"type d'index"})
+```db.macollection.createIndex({"champvoulus":"type d'index"})```
 
 Lister les index :
-db.macollection.getIndexes()
+```db.macollection.getIndexes()```
 
 Pour supprimer les index :
-db.macollection.dropIndex({"champvoulus":"type d'index"})
+```db.macollection.dropIndex({"champvoulus":"type d'index"})```
 
 - ```use rpid``` : Switch sur la base de donnée
 - ```db.someCall.insertOne({"foo":"bar"});``` : Ajouter une donnée en nom "foo" et valeur "bar"
@@ -82,10 +82,17 @@ $nin : Matches none of the values specified in an array.
 
 ### GeoJson
 
-Données : db.avignon.insertMany([{     "nom": "Palais des Papes",     "localisation": {         "coordinates": [43.9507, 4.8075],         "type": "Point"     }  },  {     "nom": "Pont Saint-Bénézet",     "localisation": {         "coordinates": [43.95397, 4.80478],         "type": "Point"     }  },  {     "nom": "Collection Lambert",     "localisation": {         "coordinates": [43.944787, 4.804031],         "type": "Point"     }  }])
+Données :
+
+```js
+db.avignon.insertMany([{     "nom": "Palais des Papes",     "localisation": {         "coordinates": [43.9507, 4.8075],         "type": "Point"     }  },  {     "nom": "Pont Saint-Bénézet",     "localisation": {         "coordinates": [43.95397, 4.80478],         "type": "Point"     }  },  {     "nom": "Collection Lambert",     "localisation": {         "coordinates": [43.944787, 4.804031],         "type": "Point"     }  }])
+```
 
 Commencez par créer un index 2dsphere sur la collection avigon :
+
+```js
 db.avignon.createIndex({"localisation":"2dsphere"})
+```
 
 ## Mongo avec docker
 

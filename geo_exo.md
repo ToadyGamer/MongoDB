@@ -10,7 +10,7 @@ return kilometres / rayonTerrestreEnKm;
 };
 var salle = db.salles.findOne({"adresse.ville": "Nîmes"}); var requete = { ... };
 
-db.salles.find({{$nearSphere:{$geometry:{type:"Point",coordinate:salle.coordinates}}},{$and:[{styles:"Blues"},styles: "Soul"]},$maxDistance:"60000"},{_id:false,nom:true});
+db.salles.find({{$nearSphere:{$geometry:{type:"Point",coordinate:"salle.adresse.localisation.coordinates"}}},{$and:[{styles:"Blues"},styles: "Soul"]},$maxDistance:"60000"},{_id:false,nom:true});
 ```
 
 ## Exercice 2
