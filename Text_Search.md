@@ -68,8 +68,33 @@ Récupérez le jeu de données suivant:
 Consignes :
 
 - importez le jeu d'essai, decrivez le
+
+C'est un jeu d'essai avec des revues une desciptions des pieces, la date ect.
+
 - creer un index de text sur les champs `summary`, `description` et `name`
+
+```js
+db.stores.createIndex({ summary: "text", description: "text", name:"text" });
+```
+
 - Lister tous les appartements contenant le terme `duplex`
+
+```js
+db.listingsAndReviews.find({$text: { $search: "duplex" }});
+```
+
 - Compter le nombre d'appartements qui possède un lit `king size`
+
+```js
+db.listingsAndReviews.find({$text: { $search: '"king size"' }}).count()
+```
+
 - Compter combien d'appartements ont pour description `cozy, studio` mais pas `furnish` (a partir de cette etape supprimez l'index et le placer uniquement sur la description)
--
+
+```js
+db.listingsAndReviews.dropIndex("description_text")
+
+db.listingsAndReviews.createIndex({ description: "text" });
+
+db.listingsAndReviews.find({ $text: { $search: "cozy studio -furnish" }}).count()
+```
