@@ -94,6 +94,14 @@ Commencez par créer un index 2dsphere sur la collection avigon :
 db.avignon.createIndex({"localisation":"2dsphere"})
 ```
 
+### Web site
+
+npm init -y = Sert à initialiser un projet Node.js en créant un fichier package.json. Le y répond a "yes" pour tout
+npm install express = Sert a installer un module express.js pour un projet node.js
+npm install mongoose = Rajoute une bilbliotheque js pour faciliter l'utilisation de mongoDB
+npm install dotenv = Rajoute des variables d'environnements
+npm install nodemon = Permet de redémarer le projet automatiquement à chaque modification
+
 ## Mongo avec docker
 
 docker pull mongo
