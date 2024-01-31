@@ -102,6 +102,11 @@ npm install mongoose = Rajoute une bilbliotheque js pour faciliter l'utilisation
 npm install dotenv = Rajoute des variables d'environnements
 npm install nodemon = Permet de redémarer le projet automatiquement à chaque modification
 
+Les middlewares dans Express sont comme des assistants pour les requêtes. Ils peuvent effectuer différentes tâches comme vérifier les informations, gérer l'authentification ou les erreurs. Les middlewares ont accès à la requête, à la réponse et peuvent passer le contrôle à d'autres fonctions. Ils sont utiles pour manipuler les données avant qu'elles n'atteignent leur destination finale
+
+On rajoute l'app.js pour l'application. Pour démarer l'app on fait node app.js.
+Quand on fait localhost:3000 on appel le middleWare qui nous dit qu'il fait des supers vérifications
+
 ## Mongo avec docker
 
 docker pull mongo
