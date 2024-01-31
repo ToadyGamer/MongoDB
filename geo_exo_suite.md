@@ -17,5 +17,13 @@ var polygone = {
 Donnez le nom des salles qui résident à l’intérieur.
 
 ```js
-db.salles.find({$geoWithin:{$geometry:{type:"Polygon",coordinate:polygone.coordinates}}},{nom:true})
+db.salles.find({
+  "adresse.localisation":{
+    $geoWithin:{
+      $geometry:
+      {type:"Polygon",coordinate:polygone.coordinates}
+      }
+    }
+  ,{nom:true}}
+)
 ```

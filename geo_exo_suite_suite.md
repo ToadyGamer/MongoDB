@@ -12,6 +12,8 @@ Explorez les données, documentez votre démarche et vos résultats dans un fich
 Trouvez la commande qui va retourner le restaurant Riviera Caterer... De quel type d'objet GeoJSON s'agit-il ?
 
 ```js
+db.restaurants.createIndex({location:"2dsphere"})
+db.neighborhoods.createIndex({geometry:"2dsphere"})
 db.restaurants.find({name:"Riviera Caterer"});
 ```
 
@@ -21,7 +23,6 @@ Trouvez "Hell'S Kitchen" au sein de la collection "neighborhoods" et retournez l
 
 ```js
 var myResto = db.restaurants.find({name:"Hell'S Kitchen"},{_id:false,name:true, 'location.coordinates':true});
-db.neighborhoods.createIndex({"geometry":"2dsphere"})
 db.neighborhoods.find({location:{$geoWithin:{$geometry:{type:"Polygon",coordinate:["geometry"]}}}},{_id:false,name:true})
 ```
 
@@ -42,5 +43,5 @@ Trouver la requete qui trouve les restaurants dans un rayon donné (8km par exem
 ```js
 var myPoint = {"type": "Point", "coordinates": [0, 0]}
 var myDistance = 8000;
-db.restaurants.find({location:{$nearSphere:{$geometry:{type:"Point",coordinate:myPoint.coordinates}}},$maxDistance:myDistance});
+db.restaurants.find({location:{$geoWithin:{$centerSphere:{[1,1]}}},8/678});
 ```

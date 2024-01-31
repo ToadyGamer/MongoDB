@@ -8,9 +8,18 @@ Vous disposez du code JavaScript suivant qui comporte une fonction de conversion
 var KilometresEnRadians = function(kilometres){ var rayonTerrestreEnKm = 6371;
 return kilometres / rayonTerrestreEnKm;
 };
-var salle = db.salles.findOne({"adresse.ville": "Nîmes"}); var requete = { ... };
-
-db.salles.find({{$nearSphere:{$geometry:{type:"Point",coordinate:"salle.adresse.localisation.coordinates"}}},{$and:[{styles:"Blues"},styles: "Soul"]},$maxDistance:"60000"},{_id:false,nom:true});
+var salle = db.salles.findOne({"adresse.ville": "Nîmes"});
+var requete = { 
+    "adresse.localisation":{
+        $geoWithin:{
+            $centerSphere : [
+                salle.adresse.location.coordinates,
+                KilometresEnRadians(60)
+            ]
+        }
+    },
+    "styles":{$in:{"blues","soul"}}
+};
 ```
 
 ## Exercice 2
@@ -19,7 +28,10 @@ db.salles.find({{$nearSphere:{$geometry:{type:"Point",coordinate:"salle.adresse.
 
 ```js
 var marseille = {"type": "Point", "coordinates": [43.300000, 5.400000]}
- db.salles.find({$nearSphere:{$geometry:{type: "Point",coordinate : marseille.coordinates},$minDistance:0,$maxDistance:100000}},{"adresse.ville":true})
+ db.salles.find({
+    "adresse.location":{
+        $nearSphere:{$geometry:{type: "Point",coordinate : marseille.coordinates},$minDistance:0,$maxDistance:100000}},{"adresse.ville":true}}
+)
 ```
 
 Site pour visualiser les point : <https://geojson.tools>
