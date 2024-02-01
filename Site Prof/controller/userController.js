@@ -1,5 +1,5 @@
 // recuperer le modele User
-// import User from '../models/userModel';
+import User from '../models/userModel';
 const getUsers = (req, res, next) => {
   // recuperer les users depuis la base de donnees
 

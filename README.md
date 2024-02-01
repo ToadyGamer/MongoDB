@@ -210,5 +210,73 @@ Il permet de retourner les points dans une zone définie
 
 Permet d'avoir les intercections des formes
 
-
 DEFINITION A EXPRESSE MIDDLEWARE !!!!
+
+db.collection.aggregate([
+   { $group: { _id: "$category", total: { $sum: "$price" } } }
+])
+
+db.collection.aggregate([
+   { $match: { price: { $gt: 100 } } }
+])
+
+db.collection.aggregate([
+   { $sort: { price: 1 } }
+])
+
+db.collection.aggregate([
+   { $group: { _id: "$category", total: { $sum: "$price" } } },
+   { $match: { total: { $gt: 1000 } } },
+   { $sort: { total: -1 } }
+])
+
+db.collection.aggregate([
+       {
+         $geoNear: {
+           near: {
+             type: "Point",
+             coordinates: [longitude, latitude]
+           },
+           distanceField: "distance",
+           maxDistance: maxDistanceInMeters,
+           spherical: true
+         }
+       }
+     ])
+
+db.collection.aggregate([
+       {
+         $match: {
+           location: {
+             $geoWithin: {
+               $geometry: {
+                 type: "Polygon",
+                 coordinates: [
+                   [
+                     [longitude1, latitude1],
+                     [longitude2, latitude2],
+                     [longitude3, latitude3],
+                     [longitude4, latitude4],
+                     [longitude1, latitude1]
+                   ]
+                 ]
+               }
+             }
+           }
+         }
+       }
+     ])
+
+db.collection.aggregate([
+  {
+    $geoNear: {
+      near: { type: "Point", coordinates: [longitude, latitude] },
+      distanceField: "distance",
+      maxDistance: distance,
+      spherical: true,
+      key: "location" // Remplacez "location" par le nom de votre champ géospatial
+    }
+  }
+])
+
+db.utilisateurs.createIndex({ age: 1 }, { name: "monIndex" })
