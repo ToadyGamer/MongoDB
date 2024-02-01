@@ -279,4 +279,27 @@ db.collection.aggregate([
   }
 ])
 
-db.utilisateurs.createIndex({ age: 1 }, { name: "monIndex" })
+db.collection.createIndex({ location: "2dsphere" })
+
+db.collection.aggregate([
+     {
+       $match: {
+         location: {
+           $geoWithin: {
+             $geometry: {
+               type: "Polygon",
+               coordinates: [
+                 [
+                   [longitude1, latitude1],
+                   [longitude2, latitude2],
+                   [longitude3, latitude3],
+                   [longitude4, latitude4],
+                   [longitude1, latitude1]
+                 ]
+               ]
+             }
+           }
+         }
+       }
+     }
+   ])
